@@ -138,6 +138,44 @@ class LinkedList<Item>{
 		return (Item)current.item;
 	}
 
+	public void removeLastNodeFromList(){
+		Node<Item> current = this.head;
+		if(current == null)
+			return;
+		if(current.next == null){
+			current = null;
+			this.head = current;
+			return;
+		}else{
+			while(current.next.next != null)
+				current = current.next;
+			current.next = current.next.next;
+		}
+
+	}
+
+	public Node reverseIterative(Node x){
+		Node first = x;
+		Node reverse = null;
+		while(first != null){
+			Node second = first.next;
+			first.next = reverse;
+			reverse = first;
+			first = second;
+		}
+		return reverse;
+	}
+
+	public Node reverseRecursive(Node first){
+		if(first == null) return null;
+		if(first.next == null) return first;
+		Node second = first.next;
+		Node rest = reverseRecursive(second);
+		second.next = first;
+		first.next = null;
+		return rest;
+	}
+
 	public static void main(String[] args) {
 		LinkedList<Integer> list = new LinkedList<Integer>();
 
@@ -179,5 +217,16 @@ class LinkedList<Item>{
 		System.out.println("Is 200 found in the list(recursive)?: " + list.searchRecursive(200));
 		System.out.println("getNth(2) = " + list.getNth(2));
 		System.out.println("getNth(4) = " + list.getNth(4));
+
+//		list.removeLastNodeFromList();
+//		list.printLinkedList();
+//		list.removeLastNodeFromList();
+//		list.printLinkedList();
+//		list.removeLastNodeFromList();
+//		list.printLinkedList();
+//		list.removeLastNodeFromList();
+//		list.printLinkedList();
+//		list.removeLastNodeFromList();
+//		list.printLinkedList();
 	}
 }

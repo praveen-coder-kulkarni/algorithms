@@ -26,11 +26,17 @@ public class Stack<Item> implements Iterable<Item>{
 
 	public Item pop(){
 		if(isEmpty())
-			throw new RuntimeException("Stack Underflow!!");
+			throw new NoSuchElementException("Stack Underflow!!");
 		Item item = first.item;
 		first = first.next;
 		N--;
 		return item;
+	}
+
+			public Item peek(){
+		if(isEmpty())
+			throw new NoSuchElementException("Stack Underflow!!");
+		return first.item;
 	}
 
 	public boolean isEmpty(){
@@ -39,6 +45,16 @@ public class Stack<Item> implements Iterable<Item>{
 
 	public int size(){
 		return N;
+	}
+
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		for(Item item : this){
+			sb.append(item);
+			sb.append(' ');
+		}
+		return sb.toString();
 	}
 
 	public Iterator<Item> iterator(){
@@ -65,7 +81,11 @@ public class Stack<Item> implements Iterable<Item>{
 	public static void main(String[] args) {
 		Stack<String> b = new Stack<String>();
 		while(!StdIn.isEmpty()){
-			b.push(StdIn.readString());
+			String string = StdIn.readString();
+			if(string.equals("-"))
+				b.pop();
+			else
+				b.push(string);
 		}
 		System.out.println("Elements in Stack are: ");
 		for(String s : b)

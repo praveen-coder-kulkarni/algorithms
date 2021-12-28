@@ -19,16 +19,11 @@ public class Queue<Item> implements Iterable<Item>{
 	}
 
 	public void enqueue(Item item){
-		if(isEmpty()){
-			first = new Node();
-			first.item = item;
-			last = first;
-		}else{
-			Node oldLast = last;
-			last = new Node();
-			last.item = item;
-			oldLast.next = last;
-		}
+		Node<Item> oldLast = last;
+		last = new Node<Item>();
+		last.item = item;
+		if(isEmpty())	first = last;
+		else				oldLast.next = last;
 		N++;
 	}
 
@@ -38,7 +33,14 @@ public class Queue<Item> implements Iterable<Item>{
 		Item item = first.item;
 		first = first.next;
 		N--;
+		if(isEmpty()) last = null;
 		return item;
+	}
+
+	public Item peek(){
+		if(isEmpty())
+			throw new NoSuchElementException("Stack Underflow!!");
+		return first.item;
 	}
 
 	public boolean isEmpty(){
@@ -47,6 +49,16 @@ public class Queue<Item> implements Iterable<Item>{
 
 	public int size(){
 		return N;
+	}
+
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		for(Item item : this){
+			sb.append(item);
+			sb.append(' ');
+		}
+		return sb.toString();
 	}
 
 	public Iterator<Item> iterator(){

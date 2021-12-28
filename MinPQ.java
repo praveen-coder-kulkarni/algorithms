@@ -1,29 +1,29 @@
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
-public class MaxPQ<Key>{
+public class MinPQ<Key>{
     private Key[] pq;
     private int N;
     private Comparator<Key> comparator;
 
-    public MaxPQ(){
+    public MinPQ(){
         this(1);
     }
 
-    public MaxPQ(int capacity){
+    public MinPQ(int capacity){
         pq = (Key[]) new Object[capacity + 1];
     }
 
-    public MaxPQ(int initCapacity, Comparator<Key> comparator){
+    public MinPQ(int initCapacity, Comparator<Key> comparator){
         this(initCapacity);
         this.comparator = comparator;
     }
 
-    public MaxPQ(Comparator<Key> comparator){
+    public MinPQ(Comparator<Key> comparator){
         this(1, comparator);
     }
 
-    public MaxPQ(Key[] keys){
+    public MinPQ(Key[] keys){
         int n = keys.length;
         pq = (Key[]) new Object[n+1];
         for(int i = 0; i < n ; i++){
@@ -41,7 +41,7 @@ public class MaxPQ<Key>{
         return N;
     }
 
-    public Key max(){
+    public Key min(){
         if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
         return pq[1];
     }
@@ -53,7 +53,7 @@ public class MaxPQ<Key>{
         swim(N);
     }
 
-    public Key delMax(){
+    public Key delMin(){
         if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
         Key max = pq[1];
         exch(1, N--);
@@ -93,9 +93,9 @@ public class MaxPQ<Key>{
 
     private boolean less(int i, int j){
         if(comparator == null){
-            return ((Comparable<Key>) pq[i]).compareTo(pq[j]) < 0;
+            return ((Comparable<Key>) pq[i]).compareTo(pq[j]) > 0;
         }
-        return comparator.compare(pq[i], pq[j]) < 0;
+        return comparator.compare(pq[i], pq[j]) > 0;
     }
 
     private void exch(int i, int j){
@@ -123,7 +123,7 @@ public class MaxPQ<Key>{
     }
 
     public static void main(String[] args) {
-        MaxPQ<String> pq = new MaxPQ<String>();
+        MinPQ<String> pq = new MinPQ<String>();
         pq.insert("P");
         pq.insert("R");
         pq.insert("I");
@@ -132,13 +132,13 @@ public class MaxPQ<Key>{
         pq.insert("I");
         pq.insert("T");
         pq.insert("Y");
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
-        System.out.println(pq.delMax());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
+        System.out.println(pq.delMin());
     }
 }
