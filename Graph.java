@@ -3,10 +3,11 @@ public class Graph{
 	private int E;
 	private Bag<Integer> adj[];
 
-	public Graph(){
-		this.V = 0;
-		this.E = 0;
-		adj = null;
+	public Graph(int V){
+		this.V = V;
+		adj = (Bag<Integer>[]) new Bag[this.V];
+		for(int v = 0 ; v < V ; v++)
+			adj[v] = new Bag<Integer>();
 	}
 
 	public Graph(In in){
