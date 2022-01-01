@@ -1,6 +1,28 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+// Pop is throwing exception. Fix it.
+//java ResizingArrayDeque
+//      pL Pramod
+//      Pramod
+//      Size of Deque is: 1
+//      pL Pramod
+//      Pramod Pramod
+//      Size of Deque is: 2
+//      pL Praveen
+//      Praveen Pramod Pramod
+//      Size of Deque is: 3
+//      pR Praveen
+//      Praveen Pramod Pramod Praveen
+//      Size of Deque is: 4
+//      ppL
+//      Pramod Pramod Praveen
+//      Size of Deque is: 3
+//      ppR
+//      Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+//      at ResizingArrayDeque.resize(ResizingArrayDeque.java:21)
+//      at ResizingArrayDeque.popRight(ResizingArrayDeque.java:59)
+//      at ResizingArrayDeque.main(ResizingArrayDeque.java:90)
 public class ResizingArrayDeque<Item> implements Iterable<Item>{
    private int N;
    private Item[] items;
@@ -12,6 +34,7 @@ public class ResizingArrayDeque<Item> implements Iterable<Item>{
       items = (Item[]) new Object[INIT_CAPACITY];
       first = INIT_CAPACITY/2;
       last = first + 1;
+//      StdOut.println("first = " + first + ", last = " + last);
    }
 
    private void resize(int maxCapacity){
@@ -64,14 +87,33 @@ public class ResizingArrayDeque<Item> implements Iterable<Item>{
    }
 
    private class ArrayDequeIterator<Item> implements  Iterator<Item>{
-      private int currentIndex = first;
-      public boolean hasNext(){ return first <= last;}
+      private int currentIndex = first + 1;
+      public boolean hasNext(){ return currentIndex <= last - 1;}
       public Item next(){
          if(!hasNext()) throw new NoSuchElementException("No elements to loop!");
+//         StdOut.println("From Iterator: currentIndex = " + currentIndex);
          Item item = (Item) items[currentIndex++];
          return item;
       }
       public void remove(){}
+   }
+
+   public static void main(String[] args) {
+      ResizingArrayDeque<String> resizingArrayDeque = new ResizingArrayDeque<String>();
+      while(!StdIn.isEmpty()){
+         String[] s = StdIn.readLine().split(" ");
+         if(s[0].equals("pL"))
+            resizingArrayDeque.pushLeft(s[1]);
+         else if(s[0].equals("pR"))
+            resizingArrayDeque.pushRight(s[1]);
+         else if(s[0].equals("ppL"))
+            resizingArrayDeque.popLeft();
+         else if(s[0].equals("ppR"))
+            resizingArrayDeque.popRight();
+         for(String ss : resizingArrayDeque)
+            StdOut.print(ss + " ");
+         StdOut.println("\n\tSize of Deque is: " + resizingArrayDeque.size());
+      }
    }
 
 }

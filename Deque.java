@@ -1,6 +1,28 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+//java Deque
+//      pL Ram
+//      Ram
+//      Size of Deque is: 1
+//      pR Laxman
+//      Ram Laxman
+//      Size of Deque is: 2
+//      pL Seeta
+//      Seeta Ram Laxman
+//      Size of Deque is: 3
+//      pR Swati
+//      Seeta Ram Laxman Swati
+//      Size of Deque is: 4
+//      pL Mohan
+//      Mohan Seeta Ram Laxman Swati
+//      Size of Deque is: 5
+//      ppR
+//      Mohan Seeta Ram Laxman
+//      Size of Deque is: 4
+//      ppL
+//      Seeta Ram Laxman
+//      Size of Deque is: 3
 public class Deque<Item> implements Iterable<Item>{
 
    private int N;
@@ -53,6 +75,7 @@ public class Deque<Item> implements Iterable<Item>{
       Item item = first.item;
       first = first.next;
       N--;
+      if(isEmpty()) last = null;
       return item;
    }
 
@@ -63,6 +86,7 @@ public class Deque<Item> implements Iterable<Item>{
       last = last.prev;
       last.next = null;
       N--;
+      if(isEmpty())  first = null;
       return item;
    }
 
@@ -84,6 +108,24 @@ public class Deque<Item> implements Iterable<Item>{
          return item;
       }
       public void remove(){}
+   }
+
+   public static void main(String[] args) {
+      Deque<String> deque = new Deque<String>();
+      while(!StdIn.isEmpty()){
+         String[] s = StdIn.readLine().split(" ");
+         if(s[0].equals("pL"))
+            deque.pushLeft(s[1]);
+         else if(s[0].equals("pR"))
+            deque.pushRight(s[1]);
+         else if(s[0].equals("ppL"))
+            deque.popLeft();
+         else if(s[0].equals("ppR"))
+            deque.popRight();
+         for(String ss : deque)
+            StdOut.print(ss + " ");
+         StdOut.println("\n\tSize of Deque is: " + deque.size());
+      }
    }
 
 }

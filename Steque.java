@@ -1,5 +1,18 @@
 import java.util.NoSuchElementException;
 
+//java Steque
+//      + praveen
+//      praveen
+//      Size of steque is: 1
+//      ++ pramod
+//      praveen pramod
+//      Size of steque is: 2
+//      -
+//      pramod
+//      Size of steque is: 1
+//      -
+//
+//      Size of steque is: 0
 public class Steque<Item> {
    private Node first, last;
    private int N;
@@ -29,8 +42,13 @@ public class Steque<Item> {
    public void push(Item item){
       Node newNode = new Node(item);
       Node oldFirst = first;
-      first = newNode;
-      first.next = oldFirst;
+      if(isEmpty()){
+         first = newNode;
+         last = newNode;
+      }else{
+         first = newNode;
+         first.next = oldFirst;
+      }
       N++;
    }
 
@@ -42,12 +60,35 @@ public class Steque<Item> {
       }else{
          Node oldLast = last;
          last = newNode;
-         if(oldLast != null)  oldLast.next = last;
+         oldLast.next = last;
       }
       N++;
    }
 
    public int size(){
       return N;
+   }
+
+   public String toString(){
+      StringBuilder sb = new StringBuilder();
+      for(Node x = first ; x != null ; x = x.next)
+         sb.append(x.item + " ");
+      sb.append("\n\tSize of steque is: " + size());
+      return sb.toString();
+   }
+
+   public static void main(String[] args) {
+      Steque<String> steque = new Steque<String>();
+      while(!StdIn.isEmpty()){
+         String[] s = StdIn.readLine().split(" ");
+         if(s[0].equals("+")){
+            steque.push(s[1]);
+         }else if(s[0].equals("-")){
+            steque.pop();
+         }else if(s[0].equals("++")){
+            steque.enqueue(s[1]);
+         }
+         StdOut.println(steque);
+      }
    }
 }
