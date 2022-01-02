@@ -57,13 +57,14 @@ public class BreadthFirstPaths{
 		In in = new In(url);
 		Graph g = new Graph(in);
 		BreadthFirstPaths bfsPaths = new BreadthFirstPaths(g, sourceVertex);
-		for(int v = 0 ; v < g.V() ; v++)
-			if(bfsPaths.hasPathTo(v)){
-				StdOut.print(v + " : ");
-				for(int u : bfsPaths.pathTo(v)){
+		for(int v = 0 ; v < g.V() ; v++) {
+			if (bfsPaths.hasPathTo(v)) {
+				StdOut.print(sourceVertex + " to " + v + "(" + bfsPaths.distTo(v) + "): ");
+				for (int u : bfsPaths.pathTo(v)) {
 					StdOut.print(u + " ");
 				}
-				StdOut.println(", Total hops = " + bfsPaths.distTo[v]);
 			}
+			StdOut.println();
+		}
 	}
 }
