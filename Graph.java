@@ -24,12 +24,25 @@ public class Graph{
 		}
 	}
 
+	public Graph(Graph G){
+		this(G.V());
+		for(int v = 0 ; v < G.V() ; v++)
+			for(int w : G.adj(v))
+				addEdge(v, w);
+	}
+
 	public int V(){return this.V;}
 	public int E(){return this.E;}
 	public void addEdge(int v, int w){
 		adj[v].add(w);
 		adj[w].add(v);
 		this.E++;
+	}
+
+	public boolean hasEdge(int v, int w){
+		for(int u : adj(v))
+			if(u == w)	return true;
+		return false;
 	}
 
 	public Iterable<Integer> adj(int v){
